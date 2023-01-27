@@ -40,4 +40,33 @@ export class FriendshipBusiness {
     }
   }
 
+  async delete(input: FriendshipInputDTO): Promise<void> {
+    try {
+      const { userId, friendId } = input
+
+      if (!userId || !friendId) {
+        throw new CustomError(422, "userId and friendId must be provided.")
+      }
+
+      const friendshipDatabase = new FriendshipDatabase()
+
+      const getFriendships = await friendshipDatabase.select()
+
+      const findFriendship = getFriendships.find(friendship => {
+        return (friendship.friend_id === friendId || friendship.friend_id === userId) && (friendship.user_id === friendId || friendship.user_id === userId)
+      })
+
+      if (!findFriendship) {
+        throw new CustomError(422, "The users are not friends.")
+      }
+
+      const friendshipId = findFriendship.id
+
+      await friendshipDatabase.delete(friendshipId)
+
+    } catch (error: any) {
+      throw new CustomError(error.statusCode, error.message)
+    }
+  }
+
 }

@@ -7,4 +7,6 @@ const friendshipController = new FriendshipController()
 
 friendshipRouter.post("/create", friendshipController.create)
 
+friendshipRouter.delete("/delete/:friendId", friendshipController.delete)
+
 

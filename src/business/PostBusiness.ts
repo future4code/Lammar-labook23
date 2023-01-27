@@ -1,3 +1,4 @@
+import { FriendshipDatabase } from "../data/FriendshipDatabase"
 import { PostDatabase } from "../data/PostDatabase"
 import { CustomError } from '../error/CustomError'
 import { InvalidDescription, InvalidType } from "../error/PostErrors"
@@ -50,7 +51,6 @@ export class PostBusiness {
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }
-
   };
 
 }

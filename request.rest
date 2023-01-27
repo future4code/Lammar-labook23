@@ -14,9 +14,9 @@ Content-Type: application/json
 
 {
     "photo": "http",
-    "description": "Curtindo",
+    "description": "Pescando",
     "type": "normal",
-    "authorId": "c8486174-4938-494f-a1cb-5a3da75921ba"
+    "authorId": "b055ff6c-bf5d-42d7-bd67-014c44f1460d"
 }
 
 ### GET POST BY ID
@@ -27,5 +27,11 @@ POST http://localhost:3003/friendship/create?userId=c8486174-4938-494f-a1cb-5a3d
 Content-Type: application/json
 
 {
-    "friendId": "bae3e22d-a591-41a5-96dc-27186bd30945"
+    "friendId": "b055ff6c-bf5d-42d7-bd67-014c44f1460d"
 }
+
+### DELETE FRIENDSHIP
+DELETE http://localhost:3003/friendship/delete/bae3e22d-a591-41a5-96dc-27186bd30945?userId=c8486174-4938-494f-a1cb-5a3da75921ba
+
+### GET FEED
+GET http://localhost:3003/user/feed?userId=c8486174-4938-494f-a1cb-5a3da75921ba

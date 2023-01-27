@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { UserBusiness } from "../business/UserBusiness";
+import { postDB } from "../model/post";
 import { UserInputDTO } from "../model/userDTO";
 
 export class UserController {
@@ -20,4 +21,17 @@ export class UserController {
       res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
     }
   }
+
+  async getFeed (req: Request, res: Response): Promise<void> {
+    try {
+      const userId = req.query.userId as string
+
+      const userBusiness = new UserBusiness()
+      const feed: postDB[] = await userBusiness.getFeed(userId)
+
+      res.status(200).send({ feed });
+    } catch (error: any) {
+      res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+    }
+  };
 }
