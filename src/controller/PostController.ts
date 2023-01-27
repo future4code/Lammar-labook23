@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PostBusiness } from "../business/PostBusiness";
-import { post } from "../model/post";
+import { post, postDB } from "../model/post";
 import { PostInputDTO } from "../model/postDTO";
 
 export class PostController {
@@ -29,7 +29,7 @@ export class PostController {
       const id = req.params.id
 
       const postBusiness = new PostBusiness()
-      const posts: post[] = await postBusiness.getById(id)
+      const posts: postDB[] = await postBusiness.getById(id)
 
       res.status(200).send({ posts });
     } catch (error: any) {

@@ -14,7 +14,7 @@ export class FriendshipDatabase extends BaseDatabase {
           friend_id: friendship.friendId
         })
         .into(FriendshipDatabase.TABLE_NAME)
-        
+
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }
@@ -30,5 +30,16 @@ export class FriendshipDatabase extends BaseDatabase {
       throw new CustomError(error.statusCode, error.message)
     }
   };
+
+  async delete(friendshipId: string): Promise<void> {
+    try {
+      await FriendshipDatabase.connection(FriendshipDatabase.TABLE_NAME)
+        .delete()
+        .where({ id: friendshipId })
+
+    } catch (error: any) {
+      throw new CustomError(error.statusCode, error.message)
+    }
+  }
 
 }

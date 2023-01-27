@@ -32,4 +32,16 @@ export class PostDatabase extends BaseDatabase {
       throw new CustomError(error.statusCode, error.message)
     }
   };
+
+  async selectFeed(friendId: string): Promise<postDB[]> {
+    try {
+      const result = await PostDatabase.connection(PostDatabase.TABLE_NAME)
+        .select("*")
+        .where({ author_id: friendId })
+
+      return result;
+    } catch (error: any) {
+      throw new CustomError(error.statusCode, error.message)
+    }
+  };
 }

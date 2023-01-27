@@ -7,4 +7,4 @@ const userController = new UserController()
 
 userRouter.post("/create", userController.create)
 
-
+userRouter.get("/feed", userController.getFeed)
