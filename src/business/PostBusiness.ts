@@ -1,18 +1,20 @@
-import { FriendshipDatabase } from "../data/FriendshipDatabase"
 import { PostDatabase } from "../data/PostDatabase"
 import { CustomError } from '../error/CustomError'
 import { InvalidDescription, InvalidType } from "../error/PostErrors"
 import { post, postDB } from '../model/post'
 import { PostInputDTO } from "../model/postDTO"
+import { Authenticator } from "../services/Authenticator"
 import { generateId } from "../services/idGenerator"
+
+const authenticator = new Authenticator()
 
 export class PostBusiness {
   async create(input: PostInputDTO): Promise<void> {
     try {
-      const { photo, description, type, authorId } = input
+      const { photo, description, type, token } = input
 
-      if (!photo || !description || !type || !authorId) {
-        throw new CustomError(422, "photo, description, type and authorId must be provided.")
+      if (!photo || !description || !type) {
+        throw new CustomError(422, "photo, description and type must be provided.")
       }
 
       if (description.length < 5) {
@@ -22,6 +24,8 @@ export class PostBusiness {
       if (type != "event" && type != "normal") {
         throw new InvalidType()
       }
+
+      const authorId = authenticator.getTokenData(token).id
 
       const id = generateId()
 
@@ -42,12 +46,12 @@ export class PostBusiness {
     }
   }
 
-  async getById (id: string): Promise<postDB[]> {
+  async getById (id: string): Promise<postDB> {
     try {
       const postDatabase = new PostDatabase();
-      const posts = await postDatabase.selectById(id)
+      const post = await postDatabase.selectById(id)
 
-      return posts;
+      return post;
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }

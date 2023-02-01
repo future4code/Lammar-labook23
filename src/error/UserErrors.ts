@@ -17,3 +17,9 @@ export class InvalidName extends CustomError {
         super(400, "Invalid name. It must have at least 3 characters.")
     }
 }
+
+export class UserNotFound extends CustomError{ 
+    constructor(){
+        super(404, "User not found.")
+    }
+}

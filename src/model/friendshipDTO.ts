@@ -1,4 +1,4 @@
 export interface FriendshipInputDTO {
-    userId: string,
+    token: string,
     friendId: string
 }

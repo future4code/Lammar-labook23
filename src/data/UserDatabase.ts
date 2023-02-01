@@ -5,7 +5,7 @@ import { BaseDatabase } from "./BaseDatabase";
 export class UserDatabase extends BaseDatabase {
   private static TABLE_NAME = "labook_users";
 
-  async create(user: user): Promise<void> {
+  async insert(user: user): Promise<void> {
     try {
       await UserDatabase.connection
         .insert({
@@ -19,5 +19,16 @@ export class UserDatabase extends BaseDatabase {
       throw new CustomError(error.statusCode, error.message)
     }
   }
+
+  async findUserByEmail(email: string): Promise<user> {
+    try {
+      const result = await UserDatabase.connection(UserDatabase.TABLE_NAME)
+        .select().where({ email })
+
+      return result[0];
+    } catch (error: any) {
+      throw new CustomError(400, error.message);
+    }
+  };
 
 }
