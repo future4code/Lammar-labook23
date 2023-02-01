@@ -3,17 +3,22 @@ import { generateId } from "../services/idGenerator"
 import { FriendshipInputDTO } from "../model/friendshipDTO"
 import { FriendshipDatabase } from "../data/FriendshipDatabase"
 import { friendship } from "../model/friendship"
+import { Authenticator } from "../services/Authenticator"
+
+const authenticator = new Authenticator()
 
 export class FriendshipBusiness {
   async create(input: FriendshipInputDTO): Promise<void> {
     try {
-      const { userId, friendId } = input
+      const { token, friendId } = input
 
-      if (!userId || !friendId) {
-        throw new CustomError(422, "userId and friendId must be provided.")
+      if (!friendId) {
+        throw new CustomError(422, "friendId must be provided.")
       }
 
       const id = generateId()
+
+      const userId = authenticator.getTokenData(token).id
 
       const friendshipDatabase = new FriendshipDatabase()
 
@@ -42,11 +47,13 @@ export class FriendshipBusiness {
 
   async delete(input: FriendshipInputDTO): Promise<void> {
     try {
-      const { userId, friendId } = input
+      const { token, friendId } = input
 
-      if (!userId || !friendId) {
-        throw new CustomError(422, "userId and friendId must be provided.")
+      if (!friendId) {
+        throw new CustomError(422, "friendId must be provided.")
       }
+
+      const userId = authenticator.getTokenData(token).id
 
       const friendshipDatabase = new FriendshipDatabase()
 

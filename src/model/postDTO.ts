@@ -4,5 +4,5 @@ export interface PostInputDTO {
     photo: string,
     description: string,
     type: POST_TYPES,
-    authorId: string
+    token: string
 }

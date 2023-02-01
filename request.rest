@@ -1,29 +1,39 @@
 ### CREATE USER
-POST http://localhost:3003/user/create
+POST http://localhost:3003/user/signup
 Content-Type: application/json
 
 {
-    "name": "josé",
-    "email": "jose@email.com",
+    "name": "carol",
+    "email": "carol@email.com",
     "password": "123456"
+}
+
+### LOGIN
+POST http://localhost:3003/user/login
+Content-Type: application/json
+
+{
+   "email": "carol@email.com" ,
+   "password": "123456"
 }
 
 ### CREATE POST
 POST http://localhost:3003/post/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzNzVlZjE3LWJhNTEtNGI5Ni05YTEyLTlmYmE4ZmE5ODk3YSIsImlhdCI6MTY3NTIwNDY2NSwiZXhwIjoxNjc1MjA4MjY1fQ.VEwEGI3HL7C6w59IsYPkgsIcto9X6bYFTtlWM8QeoWs
 Content-Type: application/json
 
 {
     "photo": "http",
-    "description": "Pescando",
-    "type": "normal",
-    "authorId": "b055ff6c-bf5d-42d7-bd67-014c44f1460d"
+    "description": "Vendo filme",
+    "type": "normal"
 }
 
 ### GET POST BY ID
 GET http://localhost:3003/post/3b6f67e9-48df-48d8-b41f-735c242d0601
 
 ### CREATE FRIENDSHIP
-POST http://localhost:3003/friendship/create?userId=c8486174-4938-494f-a1cb-5a3da75921ba
+POST http://localhost:3003/friendship/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzNzVlZjE3LWJhNTEtNGI5Ni05YTEyLTlmYmE4ZmE5ODk3YSIsImlhdCI6MTY3NTIwNDY2NSwiZXhwIjoxNjc1MjA4MjY1fQ.VEwEGI3HL7C6w59IsYPkgsIcto9X6bYFTtlWM8QeoWs
 Content-Type: application/json
 
 {
@@ -31,7 +41,9 @@ Content-Type: application/json
 }
 
 ### DELETE FRIENDSHIP
-DELETE http://localhost:3003/friendship/delete/bae3e22d-a591-41a5-96dc-27186bd30945?userId=c8486174-4938-494f-a1cb-5a3da75921ba
+DELETE http://localhost:3003/friendship/delete/b055ff6c-bf5d-42d7-bd67-014c44f1460d
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzNzVlZjE3LWJhNTEtNGI5Ni05YTEyLTlmYmE4ZmE5ODk3YSIsImlhdCI6MTY3NTIwNDY2NSwiZXhwIjoxNjc1MjA4MjY1fQ.VEwEGI3HL7C6w59IsYPkgsIcto9X6bYFTtlWM8QeoWs
 
 ### GET FEED
-GET http://localhost:3003/user/feed?userId=c8486174-4938-494f-a1cb-5a3da75921ba
+GET http://localhost:3003/user/feed
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzNzVlZjE3LWJhNTEtNGI5Ni05YTEyLTlmYmE4ZmE5ODk3YSIsImlhdCI6MTY3NTIwNDY2NSwiZXhwIjoxNjc1MjA4MjY1fQ.VEwEGI3HL7C6w59IsYPkgsIcto9X6bYFTtlWM8QeoWs

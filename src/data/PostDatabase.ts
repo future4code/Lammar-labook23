@@ -21,13 +21,13 @@ export class PostDatabase extends BaseDatabase {
     }
   }
 
-  async selectById(id: string): Promise<postDB[]> {
+  async selectById(id: string): Promise<postDB> {
     try {
       const result = await PostDatabase.connection(PostDatabase.TABLE_NAME)
         .select("*")
         .where({ id })
 
-      return result;
+      return result[0];
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }

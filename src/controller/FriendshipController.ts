@@ -6,7 +6,7 @@ export class FriendshipController {
   async create(req: Request, res: Response): Promise<void> {
     try {
       const input: FriendshipInputDTO = {
-        userId: req.query.userId as string,
+        token: req.headers.authorization as string,
         friendId: req.body.friendId
       }
 
@@ -23,7 +23,7 @@ export class FriendshipController {
   async delete(req: Request, res: Response): Promise<void> {
     try {
       const input: FriendshipInputDTO = {
-        userId: req.query.userId as string,
+        token: req.headers.authorization as string,
         friendId: req.params.friendId
       }
 
