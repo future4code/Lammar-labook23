@@ -5,7 +5,7 @@ import { BaseDatabase } from "./BaseDatabase";
 export class FriendshipDatabase extends BaseDatabase {
   private static TABLE_NAME = "labook_friendship";
 
-  async create(friendship: friendship): Promise<void> {
+  async insert(friendship: friendship): Promise<void> {
     try {
       await FriendshipDatabase.connection
         .insert({

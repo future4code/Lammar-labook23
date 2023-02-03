@@ -9,3 +9,4 @@ postRouter.post("/create", postController.create)
 
 postRouter.get("/:id", postController.getById)
 
+postRouter.get("/", postController.getByType)

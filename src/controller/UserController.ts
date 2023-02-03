@@ -45,8 +45,10 @@ export class UserController {
     try {
       const token = req.headers.authorization as string
 
+      const page = Number(req.query.page)
+
       const userBusiness = new UserBusiness()
-      const feed: postDB[] = await userBusiness.getFeed(token)
+      const feed: postDB[] = await userBusiness.getFeed(token, page)
 
       res.status(200).send({ feed });
     } catch (error: any) {
