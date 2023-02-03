@@ -21,7 +21,7 @@ export class PostBusiness {
         throw new InvalidDescription()
       }
 
-      if (type != "event" && type != "normal") {
+      if (type !== "event" && type !== "normal") {
         throw new InvalidType()
       }
 
@@ -39,19 +39,42 @@ export class PostBusiness {
         authorId
       }
 
-      await postDatabase.create(post)      
-      
+      await postDatabase.create(post)
+
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }
   }
 
-  async getById (id: string): Promise<postDB> {
+  async getById(id: string): Promise<postDB> {
     try {
       const postDatabase = new PostDatabase();
       const post = await postDatabase.selectById(id)
 
       return post;
+    } catch (error: any) {
+      throw new CustomError(error.statusCode, error.message)
+    }
+  };
+
+  async getByType(type: string): Promise<postDB[]> {
+    try {
+      const postDatabase = new PostDatabase();
+      const posts = await postDatabase.selectByType(type)
+
+      if (type !== "event" && type !== "normal") {
+        throw new InvalidType()
+      }
+
+      if (posts.length === 0) {
+        throw new CustomError(404, "There is no posts with this type.")
+      }
+
+      const orderedPosts = posts.sort((a, b): any =>
+        (a.created_at < b.created_at) ? 1 : ((b.created_at < a.created_at) ? -1 : 0)
+      )
+
+      return orderedPosts;
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }

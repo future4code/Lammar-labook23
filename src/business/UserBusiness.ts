@@ -4,13 +4,16 @@ import { CustomError } from "../error/CustomError"
 import { generateId } from "../services/idGenerator"
 import { user } from "../model/user"
 import { InvalidEmail, InvalidName, InvalidPassword, UserNotFound } from "../error/UserErrors"
-import { post, postDB } from "../model/post"
+import { postDB } from "../model/post"
 import { PostDatabase } from "../data/PostDatabase"
 import { FriendshipDatabase } from "../data/FriendshipDatabase"
 import { Authenticator } from "../services/Authenticator"
 import { LoginInputDTO } from "../model/loginDTO"
+import { HashManager } from "../services/HashManager"
 
+const userDatabase = new UserDatabase()
 const authenticator = new Authenticator()
+const hashManager = new HashManager()
 
 export class UserBusiness {
   async signup(input: UserInputDTO): Promise<string> {
@@ -35,13 +38,13 @@ export class UserBusiness {
 
       const id = generateId()
 
-      const userDatabase = new UserDatabase()
+      const hashPassword: string = await hashManager.generateHash(password)
 
       const user: user = {
         id,
         name,
         email,
-        password
+        password: hashPassword
       }
 
       await userDatabase.insert(user)
@@ -67,14 +70,16 @@ export class UserBusiness {
         throw new InvalidEmail();
       }
 
-      const userDatabase = new UserDatabase()
+
       const user = await userDatabase.findUserByEmail(email);
 
       if (!user) {
         throw new UserNotFound()
       }
 
-      if (user.password !== password) {
+      const compareResult: boolean = await hashManager.compareHash(password, user.password)
+
+      if (!compareResult) {
         throw new InvalidPassword()
       }
 
@@ -86,7 +91,7 @@ export class UserBusiness {
     }
   };
 
-  async getFeed(token: string): Promise<postDB[]> {
+  async getFeed(token: string, page: number): Promise<postDB[]> {
     try {
       const postDatabase = new PostDatabase()
       const friendshipDatabase = new FriendshipDatabase()
@@ -124,7 +129,15 @@ export class UserBusiness {
         (a.created_at < b.created_at) ? 1 : ((b.created_at < a.created_at) ? -1 : 0)
       )
 
-      return orderedFeed;
+      if (isNaN(page) || page < 1) {
+        page = 1
+      }
+
+      let offset = 5 * (page - 1)
+
+      const paginatedFeed = orderedFeed.slice(offset, offset + 5)
+
+      return paginatedFeed;
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
     }

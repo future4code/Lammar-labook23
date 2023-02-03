@@ -32,13 +32,17 @@ export class FriendshipBusiness {
         throw new CustomError(409, "The users are already friends.")
       }
 
+      if (userId === friendId) {
+        throw new CustomError(400, "The user cannot befriend himself.")
+      }
+
       const friendship: friendship = {
         id,
         userId,
         friendId
       }
 
-      await friendshipDatabase.create(friendship)
+      await friendshipDatabase.insert(friendship)
 
     } catch (error: any) {
       throw new CustomError(error.statusCode, error.message)
