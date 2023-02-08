@@ -1,0 +1,75 @@
+### SIGN UP
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+    "name": "José Ferreira",
+    "email": "jose.ferreira@email.com",
+    "password": "654321"
+}
+
+### LOGIN
+POST http://localhost:3003/user/login
+Content-Type: application/json
+
+{
+   "email": "jose.ferreira@email.com" ,
+   "password": "654321"
+}
+
+### CREATE POST
+POST http://localhost:3003/post/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5OWUxYjI0LWUxZmItNDY0NC04YWVhLTMzZDhjZDhmYTI2YiIsImlhdCI6MTY3NTQzMzU0MywiZXhwIjoxNjc1NDM3MTQzfQ.OrsyS7PcMIuu2Sv6rawM1A4fDFrpGcFUYlk-AqiLCZI
+Content-Type: application/json
+
+{
+    "photo": "http",
+    "description": "Natal com a família.",
+    "type": "event"
+}
+
+### GET POST BY ID
+GET http://localhost:3003/post/053420f4-1470-44e8-80c7-7fc3804ab59b
+
+### CREATE FRIENDSHIP
+POST http://localhost:3003/friendship/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRjMjNiNWZkLTZiNWYtNGE1NC1hYWNlLTI3NTgyOTExNWRmZiIsImlhdCI6MTY3NTQzMzI1MywiZXhwIjoxNjc1NDM2ODUzfQ.G9rUScnuP3Q0xYqZ22AJdyznsd9tOxZS3Wxi9J8sPlo
+Content-Type: application/json
+
+{
+    "friendId": "eace0f72-9f6d-472b-b2b8-f515f304291b"
+}
+
+### DELETE FRIENDSHIP
+DELETE http://localhost:3003/friendship/delete/b055ff6c-bf5d-42d7-bd67-014c44f1460d
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzNzVlZjE3LWJhNTEtNGI5Ni05YTEyLTlmYmE4ZmE5ODk3YSIsImlhdCI6MTY3NTIwNDY2NSwiZXhwIjoxNjc1MjA4MjY1fQ.VEwEGI3HL7C6w59IsYPkgsIcto9X6bYFTtlWM8QeoWs
+
+### GET FEED
+GET http://localhost:3003/user/feed?page=2
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5OWUxYjI0LWUxZmItNDY0NC04YWVhLTMzZDhjZDhmYTI2YiIsImlhdCI6MTY3NTQzMzU0MywiZXhwIjoxNjc1NDM3MTQzfQ.OrsyS7PcMIuu2Sv6rawM1A4fDFrpGcFUYlk-AqiLCZI
+
+### GET POST BY TYPE
+GET http://localhost:3003/post?type=normal
+
+### LIKE A POST
+POST http://localhost:3003/like/create
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5OWUxYjI0LWUxZmItNDY0NC04YWVhLTMzZDhjZDhmYTI2YiIsImlhdCI6MTY3NTQzMzU0MywiZXhwIjoxNjc1NDM3MTQzfQ.OrsyS7PcMIuu2Sv6rawM1A4fDFrpGcFUYlk-AqiLCZI
+Content-Type: application/json
+
+{
+    "postId": "c17e59b3-aa3f-428e-a91c-22c7723a98f1"
+}
+
+### DISLIKE A POST
+DELETE http://localhost:3003/like/delete/415f4b67-e1f8-4f29-9b88-750fca8a25d5
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIzNzVlZjE3LWJhNTEtNGI5Ni05YTEyLTlmYmE4ZmE5ODk3YSIsImlhdCI6MTY3NTI4NTg0MywiZXhwIjoxNjc1Mjg5NDQzfQ.cm3kGJ1HSaUnssDWC1kPQOMvdCj3-s0KNw-AbWsqjIM
+
+### COMMENT A POST
+POST http://localhost:3003/comment
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ5OWUxYjI0LWUxZmItNDY0NC04YWVhLTMzZDhjZDhmYTI2YiIsImlhdCI6MTY3NTQzMzU0MywiZXhwIjoxNjc1NDM3MTQzfQ.OrsyS7PcMIuu2Sv6rawM1A4fDFrpGcFUYlk-AqiLCZI
+Content-Type: application/json
+
+{
+    "postId": "13ac6251-99f6-4287-a9de-71531f76ac59",
+    "message": "Deveria ter ido :("
+}
